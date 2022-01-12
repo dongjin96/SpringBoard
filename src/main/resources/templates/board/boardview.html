@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="header.html::header"> </div>
+<script th:src="@{/js/board.js}"></script>
+<div class ="container">
+    <a>상세 보기</a>
+    <td th:text="${boardDto.b_num}"></td>
+    <td th:text="${boardDto.b_title}"></td>
+    <td th:text="${boardDto.b_contents}"></td>
+    <td th:text="${boardDto.b_write}"></td>
+    <td th:text="${boardDto.b_view}"></td>
+
+</div>
+    <form action="/board/boardpassword" method="post">
+        비밀번호 확인<input type="password" name="b_password">
+        <input type="hidden" name="b_num" th:value="${boardDto.b_num}">
+        <input type="submit" value="확인">
+        <span th:text="${passwordmsg}"></span>
+    </form>
+
+<button th:if="${passwordmsg=='1'}" th:onclick="bdelete([[${boardDto.b_num}]])">삭제</button>
+<a th:href="@{'/board/boardupdate/'+${boardDto.b_num}}"><button th:if="${passwordmsg=='1'}" >수정하기</button></a>
+
+
+</body>
+</html>

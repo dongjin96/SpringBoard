@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/board/boardwrite}"><button class="form-control">글작성</button></a>
+    <table class="table">
+        <tr>
+            <th>번호</th><th>제목</th><th>작성자</th>
+            <th>작성일</th><th>조회수</th>
+        </tr>
+        <tr th:each="boardDto : ${BoardDtos}">
+            <td th:text="${boardDto.b_num}"></td>
+
+            <td>
+                <a th:href="@{'/board/boardview/'+${boardDto.b_num}}">
+                    <span th:text="${boardDto.b_title}" onclick="ajax"></span>
+                </a>
+            </td>
+            <td th:text="${boardDto.b_write}"></td>
+            <td th:text="${boardDto.b_createDate}"></td>
+            <td th:text="${boardDto.b_view}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
