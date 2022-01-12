@@ -43,14 +43,14 @@ public class BoardController {
     public String boardlist(Model model){
         ArrayList<BoardDto> boardDtos = boardService.boardlist();
         model.addAttribute("BoardDtos",boardDtos);
-        return "/board/boardlsit"; //타임리프를 통한  html반환
+        return "board/boardlsit"; //타임리프를 통한  html반환
     }
     //게시물 보기 페이지 이동
     @GetMapping("/board/boardview/{b_num}")
     public String boardview(@PathVariable("b_num") int b_num, Model model){
         BoardDto boardDto = boardService.getboard(b_num);
         model.addAttribute("boardDto",boardDto);
-        return "/board/boardview";
+        return "board/boardview";
     }
     //게시물 삭제 처리
     @GetMapping("/board/boarddelete")
@@ -69,7 +69,7 @@ public class BoardController {
     public String boardupdate(@PathVariable("b_num")int b_num,Model model){
         BoardDto boardDto = boardService.getboard(b_num);
         model.addAttribute("boardDto",boardDto);
-        return "/board/boardupdate";
+        return "board/boardupdate";
     }
     @PostMapping("/board/boardcontroller")
     public String boardcontroller(BoardDto boardDto){
@@ -85,9 +85,10 @@ public class BoardController {
                 model.addAttribute("passwordmsg","1");
                 return "board/boardview";
         } else {
-            model.addAttribute("boardDto",boardDto1);
+            //model.addAttribute("boardDto",boardDto1);
             model.addAttribute("passwordmsg","안됩니다");
-            return "board/boardview/"+boardDto.getB_num();
+
+            return "redirect:/board/boardview/"+boardDto.getB_num();
         }
 
 
