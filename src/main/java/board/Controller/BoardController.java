@@ -90,8 +90,6 @@ public class BoardController {
 
             return "redirect:/board/boardview/"+boardDto.getB_num();
         }
-
-
-
     }
+
 }
