@@ -13,46 +13,20 @@
             <th>작성일</th><th>조회수</th>
         </tr>
         <tr th:each="boardDto : ${BoardDtos}">
-            <td th:text="${boardDto.b_num}"></td>
+            <td th:text="${boardDto.bnum}"></td>
 
             <td>
-                <a th:href="@{'/board/boardview/'+${boardDto.b_num}}">
+                <a th:href="@{'/board/boardview/'+${boardDto.bnum}}">
                     <span th:text="${boardDto.b_title}" onclick="ajax"></span>
                 </a>
             </td>
             <td th:text="${boardDto.b_write}"></td>
             <td th:text="${boardDto.b_createDate}"></td>
             <td th:text="${boardDto.b_view}"></td>
+
         </tr>
     </table>
 </div>
-<!--<ul class="pagination justify-content-center"-->
-<!--    th:with="start=${T(Math).floor( BoardDtos.number/10 ) * 10 + 1 } ,-->
-<!--          last=(${start + 9 < BoardDtos.totalPages ?  start + 9 : BoardDtos.totalPages })">-->
-
-<!--    <li class = "page-item">&lt;!&ndash;첫 페이지&ndash;&gt;-->
-<!--        <a  class="page-link" th:href="@{/board/boardlist(page=1)}"><<</a>-->
-<!--    </li>-->
-<!--    &lt;!&ndash;이전 페이지&ndash;&gt;-->
-<!--    <li class = "page-item">-->
-<!--        <a class="page-link" th:href="@{/board/boardlist(page=${BoardDtos.number})}" ><</a>-->
-<!--    </li>-->
-
-<!--    &lt;!&ndash; 페이지 번호 목록&ndash;&gt;-->
-<!--    <li  class = "page-item" th:each ="page : ${#numbers.sequence(start,last)}">-->
-<!--        <a  class="page-link" th:href="@{/board/boardlist(page=${page})}" th:text="${page}"></a>-->
-<!--    </li>-->
-
-<!--    <li class = "page-item" >&lt;!&ndash;다음 페이지&ndash;&gt;-->
-<!--        <a  class="page-link" th:href="@{/board/boardlist(page=${BoardDtos.number+2})}" >></a>-->
-<!--    </li>-->
-
-
-<!--    <li class = "page-item" >&lt;!&ndash;마지막 페이지&ndash;&gt;-->
-<!--        <a class="page-link" th:href="@{/board/boardlist(page=${BoardDtos.totalPages})}" >>></a>-->
-<!--    </li>-->
-
-<!--</ul>-->
 
 </body>
 </html>

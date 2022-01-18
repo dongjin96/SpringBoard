@@ -1,5 +1,4 @@
 package board.Service;
-
 import board.Domain.Dto.BoardDto;
 import board.Domain.Entity.board.BoardEntity;
 import board.Domain.Entity.board.BoardRepository;
@@ -21,7 +20,7 @@ public class BoardService {
 
     //글쓰기 메소드
     public void boardwrite(BoardDto boardDto){
-         boardRepository.save(boardDto.toentity());
+        boardRepository.save(boardDto.toentity());
     }
 
     //모든글 출력 메소드
@@ -35,13 +34,16 @@ public class BoardService {
                 date = boardEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("hh:mm:ss"));
             }
             BoardDto boardDto = new BoardDto(
-                    boardEntity.getB_num(),
+                    boardEntity.getBnum(),
                     boardEntity.getB_title(),
                     boardEntity.getB_write(),
                     boardEntity.getB_contents(),
                     date,
                     boardEntity.getB_password(),
-                    boardEntity.getB_view());
+                    boardEntity.getB_view(),
+                    boardEntity.getB_img(),null);
+
+
             boardDtos.add(boardDto);
 
         }
@@ -52,12 +54,13 @@ public class BoardService {
         Optional<BoardEntity> entityoptional = boardRepository.findById(b_num);
         String date = entityoptional.get().getCreatedDate().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
         return BoardDto.builder()
-                .b_num(entityoptional.get().getB_num())
+                .bnum(entityoptional.get().getBnum())
                 .b_title(entityoptional.get().getB_title())
                 .b_contents(entityoptional.get().getB_contents())
                 .b_write(entityoptional.get().getB_write())
                 .b_view(entityoptional.get().getB_view())
                 .b_createDate(date)
+                .b_img(entityoptional.get().getB_img())
                 .build();
     }
     public boolean delete(int b_num){
@@ -74,7 +77,7 @@ public class BoardService {
     @Transactional
     public boolean update(BoardDto boardDto) {
         try {
-            Optional<BoardEntity> entityOptional = boardRepository.findById(boardDto.getB_num());
+            Optional<BoardEntity> entityOptional = boardRepository.findById(boardDto.getBnum());
             entityOptional.get().setB_title(boardDto.getB_title());
             entityOptional.get().setB_contents(boardDto.getB_contents());
             return true;
@@ -90,8 +93,8 @@ public class BoardService {
 
             return true;
         }
-            return false;
-        }
+        return false;
+    }
 
 
 }

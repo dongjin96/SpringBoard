@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @Controller
@@ -17,10 +16,10 @@ public class BoardController {
 
     @Autowired
     HttpServletRequest request;
-//게시물 쓰기 페이지로 이동
-@GetMapping("/board/boardwrite")
+    //게시물 쓰기 페이지로 이동
+    @GetMapping("/board/boardwrite")
     public String boardwrite(){return "board/boardwrite";}
-// 게시물 쓰기 처리
+    // 게시물 쓰기 처리
     @PostMapping("/board/boardwritecontroller")
     public String boardwritecontroller(){
 
@@ -30,6 +29,7 @@ public class BoardController {
                 .b_contents(request.getParameter("b_contents"))
                 .b_write(request.getParameter("b_write"))
                 .b_password(request.getParameter("b_password"))
+                .b_img(request.getParameter("b_img"))
                 .build();
         boardService.boardwrite(boardDto);
         return "redirect:/board/boardlsit";
@@ -54,11 +54,11 @@ public class BoardController {
     }
     //게시물 삭제 처리
     @GetMapping("/board/boarddelete")
-            @ResponseBody
-            public int boarddelete(@RequestParam("b_num") int b_num){
-                System.out.println(b_num);
-                boolean result = boardService.delete(b_num);
-                if(result){
+    @ResponseBody
+    public int boarddelete(@RequestParam("b_num") int b_num){
+        System.out.println(b_num);
+        boolean result = boardService.delete(b_num);
+        if(result){
             return 1;
         }else{
             return 2;
@@ -78,17 +78,17 @@ public class BoardController {
     }
     @PostMapping("/board/boardpassword")
     public String password(BoardDto boardDto, Model model) {
-        boolean result = boardService.passwordcheck(boardDto.getB_num(),boardDto.getB_password());
-        BoardDto boardDto1 = boardService.getboard(boardDto.getB_num());
+        boolean result = boardService.passwordcheck(boardDto.getBnum(),boardDto.getB_password());
+        BoardDto boardDto1 = boardService.getboard(boardDto.getBnum());
         if (result) {
-                model.addAttribute("boardDto",boardDto1);
-                model.addAttribute("passwordmsg","1");
-                return "board/boardview";
+            model.addAttribute("boardDto",boardDto1);
+            model.addAttribute("passwordmsg","1");
+            return "board/boardview";
         } else {
             //model.addAttribute("boardDto",boardDto1);
             model.addAttribute("passwordmsg","안됩니다");
 
-            return "redirect:/board/boardview/"+boardDto.getB_num();
+            return "redirect:/board/boardview/"+boardDto.getBnum();
         }
     }
 
